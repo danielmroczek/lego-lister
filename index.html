@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego parts lister</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <form id="searchForm" class="search-form">
+            <input type="text" id="setNumber" placeholder="Enter Lego set number" required>
+            <button type="submit">Find Set</button>
+        </form>
+
+        <div id="setInfo" class="set-info hidden">
+            <img id="setImage" class="hidden" alt="Set image">
+            <div class="set-details">
+                <h1 id="setName"></h1>
+                <p>Set number: <strong><span id="setNumberDisplay"></span></strong></p>
+                <p>Theme: <span id="setTheme"></span></p>
+                <p>Year: <span id="setYear"></span></p>
+                <p>Set parts: <span id="totalParts"></span></p>
+                <p>Minifig parts: <span id="minifigPartsCount">0</span></p>
+                <p>Total parts: <span id="allPartsCount">0</span></p>
+            </div>
+        </div>
+
+        <div id="partsList" class="parts-list"></div>
+        <div class="page-number"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "Lego Parts Lister",
+  "short_name": "LegoLister",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff0000"
+}
