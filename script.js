@@ -172,11 +172,21 @@ function displayParts(parts) {
     parts.forEach(part => {
         const card = document.createElement('div');
         card.className = 'part-card';
+        
+        // Build BrickLink URL
+        const blPartId = part.part.external_ids.BrickLink[0];
+        const blColorId = part.color.external_ids.BrickLink.ext_ids[0];
+        const bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blPartId}&C=${blColorId}`;
+        
+        card.addEventListener('click', () => {
+            window.open(bricklinkUrl, '_blank');
+        });
+
         card.innerHTML = `
             <img src="${part.part.part_img_url}" alt="${part.part.name}">
             <div>
-                <p><strong>${part.part.external_ids.BrickLink[0]}</strong></p>
-                <p>${part.color.external_ids.BrickLink.ext_descrs[0]} (${part.color.external_ids.BrickLink.ext_ids[0]})</p>
+                <p><strong>${blPartId}</strong></p>
+                <p>${part.color.external_ids.BrickLink.ext_descrs[0]} (${blColorId})</p>
                 <p>Qty: <strong>${part.quantity}</strong></p>
                 <p class="part-name">${part.part.name}</p>
             </div>
