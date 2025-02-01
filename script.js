@@ -136,6 +136,13 @@ function displaySetInfo(setData, counts) {
     const setImage = document.getElementById('setImage');
     setImage.src = setData.set_img_url;
     setImage.classList.remove('hidden');
+    
+    // Add click handler for set image
+    setImage.addEventListener('click', () => {
+        const bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?S=${setData.set_num}#T=I`;
+        window.open(bricklinkUrl, '_blank');
+    });
+    
     document.getElementById('setName').textContent = setData.name;
     document.getElementById('setNumberDisplay').textContent = setData.set_num;
     document.getElementById('setTheme').textContent = setData.theme ? 
