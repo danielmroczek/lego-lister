@@ -58,6 +58,24 @@
     align-items: start;
     cursor: pointer;
     transition: transform 0.1s ease-in-out;
+    position: relative;
+}
+
+.spare-part {
+    border-style: dashed;
+}
+
+.spare-part::after {
+    content: "SPARE";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ffd700;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .part-card:hover, #setImage:hover {
@@ -223,6 +241,11 @@
     button:hover {
         background-color: #404040;
     }
+
+    .spare-part::after {
+        background: #856404;
+        color: #fff3cd;
+    }
 }
 
 @media print {
@@ -313,5 +336,11 @@
 
     .set-details p {
         margin: 5px 0;
+    }
+
+    .spare-part::after {
+        font-size: 7px;
+        padding: 1px 4px;
+        background: none;
     }
 }

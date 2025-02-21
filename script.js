@@ -187,7 +187,7 @@ function displayParts(parts) {
   partsList.innerHTML = "";
 
   const partsGrid = document.createElement("div");
-  partsGrid.className = "parts-grid";
+  partsGrid.classList.add("parts-grid");
 
   // Sort parts by BrickLink color ID first, then by BrickLink part number
   parts.sort((a, b) => {
@@ -205,7 +205,10 @@ function displayParts(parts) {
 
   parts.forEach((part) => {
     const card = document.createElement("div");
-    card.className = "part-card";
+    card.classList.add("part-card");
+    if (part.is_spare) {
+      card.classList.add("spare-part");
+    }
 
     // Build BrickLink URL
     const blPartId = part.part.external_ids.BrickLink[0];
@@ -220,17 +223,11 @@ function displayParts(parts) {
             <img src="${part.part.part_img_url}" alt="${part.part.name}">
             <div>
                 <p><strong>${blPartId}</strong></p>
-                <p>${
-                  part.color.external_ids.BrickLink.ext_descrs[0]
-                } (${blColorId})</p>
+                <p>${part.color.external_ids.BrickLink.ext_descrs[0]} (${blColorId})</p>
                 <p>Qty: <strong>${part.quantity}</strong></p>
                 <p class="part-name">${part.part.name}</p>
             </div>
-            ${
-              part.from_minifig
-                ? `<p class="minifig-source">Minifig: ${part.minifig_name}</p>`
-                : ""
-            }
+            ${part.from_minifig ? `<p class="minifig-source">Minifig: ${part.minifig_name}</p>` : ''}
         `;
     partsGrid.appendChild(card);
   });
