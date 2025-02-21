@@ -36,16 +36,9 @@
     cursor: pointer;
 }
 
-/*.color-group {
-    margin-bottom: 40px;
+#setImage {
+    transition: transform 0.1s ease-in-out;
 }
-
-.color-header {
-    background: #eee;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}*/
 
 .parts-grid {
     display: grid;
@@ -67,7 +60,7 @@
     transition: transform 0.1s ease-in-out;
 }
 
-.part-card:hover {
+.part-card:hover, #setImage:hover {
     transform: scale(1.02);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
