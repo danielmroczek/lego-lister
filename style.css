@@ -59,6 +59,8 @@
     cursor: pointer;
     transition: transform 0.1s ease-in-out;
     position: relative;
+    text-decoration: none;
+    color: inherit;
 }
 
 .spare-part {

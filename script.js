@@ -191,33 +191,28 @@ function displayParts(parts) {
 
   // Sort parts by BrickLink color ID first, then by BrickLink part number
   parts.sort((a, b) => {
-    // First compare color IDs
     const colorA = parseInt(a.color.external_ids.BrickLink.ext_ids[0]);
     const colorB = parseInt(b.color.external_ids.BrickLink.ext_ids[0]);
     if (colorA !== colorB) {
       return colorA - colorB;
     }
-    // If colors are equal, compare part numbers
     return a.part.external_ids.BrickLink[0].localeCompare(
       b.part.external_ids.BrickLink[0]
     );
   });
 
   parts.forEach((part) => {
-    const card = document.createElement("div");
-    card.classList.add("part-card");
-    if (part.is_spare) {
-      card.classList.add("spare-part");
-    }
-
-    // Build BrickLink URL
     const blPartId = part.part.external_ids.BrickLink[0];
     const blColorId = part.color.external_ids.BrickLink.ext_ids[0];
     const bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blPartId}&C=${blColorId}`;
 
-    card.addEventListener("click", () => {
-      window.open(bricklinkUrl, "_blank");
-    });
+    const card = document.createElement("a");
+    card.href = bricklinkUrl;
+    card.target = "_blank";
+    card.classList.add("part-card");
+    if (part.is_spare) {
+      card.classList.add("spare-part");
+    }
 
     card.innerHTML = `
             <img src="${part.part.part_img_url}" alt="${part.part.name}">
