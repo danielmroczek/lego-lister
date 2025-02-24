@@ -202,7 +202,7 @@ function displayParts(parts) {
   });
 
   parts.forEach((part) => {
-    const blPartId = part.part.external_ids.BrickLink[0];
+    const blPartId = part.part.external_ids.BrickLink.slice(-1)[0];
     const blColorId = part.color.external_ids.BrickLink.ext_ids[0];
     const bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${blPartId}&C=${blColorId}`;
 
