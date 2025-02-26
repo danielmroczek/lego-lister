@@ -115,6 +115,10 @@ async function fetchSetData(setNumber) {
         fetch(
           `${API_BASE}/minifigs/${minifig.set_num}/parts/?key=${API_KEY}`
         ).then((response) => response.json())
+        .then((data) => ({
+          ...data,
+          minifig
+    }))
       );
 
       const minifigPartsResults = await Promise.all(minifigPartsPromises);
@@ -122,7 +126,7 @@ async function fetchSetData(setNumber) {
         result.results.map((part) => ({
           ...part,
           from_minifig: true,
-          minifig_name: part.set_num,
+          minifig: result.minifig,
         }))
       );
     }
@@ -222,7 +226,7 @@ function displayParts(parts) {
                 <p>Qty: <strong>${part.quantity}</strong></p>
                 <p class="part-name">${part.part.name}</p>
             </div>
-            ${part.from_minifig ? `<p class="minifig-source">Minifig: ${part.minifig_name}</p>` : ''}
+            ${part.from_minifig ? `<a href="//rebrickable.com/minifigs/${part.minifig.set_num}" class="minifig-source">Minifig: ${part.minifig.set_num} (${part.minifig.set_name})</a>` : ''}
         `;
     partsGrid.appendChild(card);
   });
