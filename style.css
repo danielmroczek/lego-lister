@@ -1,3 +1,7 @@
+p {
+    margin: .5em inherit;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -45,6 +49,31 @@
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
     margin-bottom: 20px;
+}
+
+.parts-section-title {
+    margin: 20px 0 12px;
+}
+
+.minifig-group {
+    margin-bottom: 24px;
+}
+
+.minifig-group-title {
+    margin: 0 0 6px;
+}
+
+.minifig-id-label {
+    font-size: 14px;
+}
+
+.minifig-name-link {
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.minifig-name-link:hover {
+    text-decoration: underline;
 }
 
 .part-card {
@@ -228,6 +257,10 @@
         border-top-color: #404040;
     }
 
+    .minifig-name-link {
+        color: #9ec7ff;
+    }
+
     .minifig-card.error {
         background: #2c1c1c;
         border-color: #4a2020;
@@ -289,6 +322,24 @@
         grid-template-columns: 60px 1fr;
         gap: 5px;
         break-inside: avoid;
+    }
+
+    .parts-section-title {
+        margin: 12px 0 8px;
+        font-size: 16px;
+    }
+
+    .minifig-group-title {
+        margin-bottom: 4px;
+        font-size: 13px;
+    }
+
+    .minifig-id-label {
+        font-size: 11px;
+    }
+
+    .minifig-name-link {
+        font-size: 10px;
     }
 
     .part-name {
