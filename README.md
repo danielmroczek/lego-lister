@@ -1,6 +1,9 @@
 # Lego Lister
 
-A web application that helps you find and list parts for given LEGO sets.
+## Overview
+
+Lego Lister is a lightweight, client-side web app built to help rebuild sets from mixed brick collections.  
+Enter a set number, load parts from Rebrickable, and print a list that is easy to browse while shopping for missing pieces.
 
 ## Live Demo
 Try it here: [Lego Lister](https://danielmroczek.github.io/lego-lister/)
@@ -12,39 +15,59 @@ As a child, I was a huge LEGO fan. My brothers and I would occasionally receive 
 They took on this challenging task by first sorting all the bricks by color, then methodically trying to match them to their original sets. After many days of dedication, they succeeded! They managed to identify 40 different sets - I had no idea we had so many! However, they discovered that many sets were missing several pieces and weren't complete.
 
 This inspired my project - to help source the missing pieces online. While similar tools existed, none provided parts lists in a clear, print-friendly format that could be easily added to a binder. That's how Lego Lister was born. Using it, I could print organized parts lists for each set, making it simple to track missing pieces and order replacements. The journey to complete these childhood sets continues!
-
 ## Features
 
-- Search for LEGO sets by set number
-- Display set information including name, theme, and year
-- Show complete parts list including both regular and minifigure parts
-- Responsive design
-- Print-friendly layout for parts lists
-- Automatic page numbering for printed documents
+- Set lookup by set number, with automatic suffix handling such as turning 1234 into 1234-1.
+- Detailed set summary: name, number, theme, year, part totals.
+- Parts grouped for practical use:
+   - regular parts
+   - spare regular parts
+   - minifig parts grouped by minifig
+- Stable sorting by BrickLink color id, then BrickLink part id.
+- Direct links to BrickLink for both set and part pages.
+- Print-focused layout with page-aware formatting.
+- API key persistence in browser local storage.
 
-## Usage
+## Tech Stack
 
-1. Open the application in a web browser
-2. When using for the first time, you'll be prompted to enter your Rebrickable API key
-   - You can get a free API key at [Rebrickable.com](https://rebrickable.com/api/)
-   - The key is stored securely in your browser's local storage
-   - It's only used to communicate directly with Rebrickable's API
-3. Enter a LEGO set number in the search field
-4. Click "Find Set" to view the set details and parts list
+- Alpine.js 3 (CDN)
+- Vanilla JavaScript (no build tooling)
+- Rebrickable API v3
+- Plain HTML and CSS
 
-Note: If your API key becomes invalid, you'll be prompted to enter a new one.
+## Quick Start
+
+1. Clone or download this repository.
+2. Open index.html in a browser.
+3. On first run, paste your Rebrickable API key when prompted.
+4. Search for a set number and review the generated parts list.
+
+> [!TIP]
+> You can get a free API key here: https://rebrickable.com/api/
 
 ## Printing
 
-To print a parts list:
-1. Search for and display the desired set
-2. Use your browser's print function (Ctrl+P or Cmd+P)
-3. The list will automatically format for printing with:
-   - Optimized layout for paper
-   - Set information at the top of each page
-   - Automatic page numbers
-   - Clean, readable font sizes
+1. Load a set.
+2. Press Ctrl+P (or Cmd+P on macOS).
+3. Print using the built-in print styles.
 
-## License
+The print view is optimized for compact cards and includes generated page footer information.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Data and Security
+
+> [!IMPORTANT]
+> Your Rebrickable API key is stored only in your browser local storage.
+> It is used only for direct requests to Rebrickable.
+
+If the key becomes invalid, the app clears it and asks for a new one.
+
+## Project Structure
+
+- index.html: App markup and Alpine templates.
+- script.js: Alpine component state, API integration, sorting, grouping, and view-model mapping.
+- style.css: Screen and print styles.
+- manifest.json: PWA metadata and icon configuration.
+
+## Why This Project Exists
+
+This project started as a practical way to recover old family LEGO sets from a mixed collection, identify missing pieces, and make replacement buying easier with print-friendly checklists.
