@@ -7,33 +7,104 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </head>
-<body>
-    <div class="container">
-        <form id="searchForm" class="search-form">
-            <input type="text" id="setNumber" placeholder="Enter Lego set number" required>
-            <button type="submit">Find Set</button>
+<body x-data="legoListerApp()" x-init="init()">
+    <div class="container" x-cloak>
+        <form id="searchForm" class="search-form" @submit.prevent="handleSubmit">
+            <input type="text" id="setNumber" x-model.trim="setNumberInput" placeholder="Enter Lego set number" required>
+            <button type="submit" :disabled="loading" x-text="loading ? 'Loading...' : 'Find Set'"></button>
         </form>
 
-        <div id="setInfo" class="set-info hidden">
-            <a id="setImageLink" href="#" target="_blank">
-                <img id="setImage" class="hidden" alt="Set image">
+        <p class="api-key-notice" x-show="apiKeyNotice" x-text="apiKeyNotice"></p>
+        <p class="api-key-notice" x-show="errorMessage" x-text="errorMessage"></p>
+
+        <div id="setInfo" class="set-info" x-show="setData">
+            <a id="setImageLink" :href="setImageLink" target="_blank" rel="noopener noreferrer">
+                <img id="setImage" :src="setData?.set_img_url" alt="Set image" x-show="setData?.set_img_url">
             </a>
             <div class="set-details">
-                <h1 id="setName"></h1>
-                <p>Set number: <strong><span id="setNumberDisplay"></span></strong></p>
-                <p>Theme: <span id="setTheme"></span></p>
-                <p>Year: <span id="setYear"></span></p>
-                <p>Set parts: <span id="totalParts"></span></p>
-                <p>Minifigs: <span id="minifigsCount">0</span></p>
-                <p>Minifig parts: <span id="minifigPartsCount">0</span></p>
-                <p>Total parts: <span id="allPartsCount">0</span></p>
+                <h1 id="setName" x-text="setData?.name || ''"></h1>
+                <p>Set number: <strong><span id="setNumberDisplay" x-text="setData?.set_num || ''"></span></strong></p>
+                <p>Theme: <span id="setTheme" x-text="themeDisplay"></span></p>
+                <p>Year: <span id="setYear" x-text="setData?.year || 'Unknown'"></span></p>
+                <p>Set parts: <span id="totalParts" x-text="counts.setParts"></span></p>
+                <p>Minifigs: <span id="minifigsCount" x-text="counts.minifigsCount"></span></p>
+                <p>Minifig parts: <span id="minifigPartsCount" x-text="counts.minifigPartsCount"></span></p>
+                <p>Total parts: <span id="allPartsCount" x-text="counts.totalParts"></span></p>
             </div>
         </div>
 
-        <div id="partsList" class="parts-list"></div>
+        <div id="partsList" class="parts-list">
+            <template x-if="regularParts.length > 0">
+                <section>
+                    <h2 class="parts-section-title" x-text="`Regular parts (${regularParts.length} types):`"></h2>
+                    <div class="parts-grid">
+                        <template x-for="part in regularParts" :key="part.id">
+                            <a :href="part.bricklinkUrl" target="_blank" rel="noopener noreferrer" class="part-card">
+                                <img :src="part.imageUrl" :alt="part.name">
+                                <div>
+                                    <p><strong x-text="part.blPartId"></strong></p>
+                                    <p x-text="`${part.colorDescription} (${part.blColorId})`"></p>
+                                    <p>Qty: <strong x-text="part.quantity"></strong></p>
+                                    <p class="part-name" x-text="part.name"></p>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                </section>
+            </template>
+
+            <template x-if="spareRegularParts.length > 0">
+                <section>
+                    <h3 class="minifig-group-title" x-text="`Spare parts (${spareRegularParts.length})`"></h3>
+                    <div class="parts-grid">
+                        <template x-for="part in spareRegularParts" :key="part.id">
+                            <a :href="part.bricklinkUrl" target="_blank" rel="noopener noreferrer" class="part-card spare-part">
+                                <img :src="part.imageUrl" :alt="part.name">
+                                <div>
+                                    <p><strong x-text="part.blPartId"></strong></p>
+                                    <p x-text="`${part.colorDescription} (${part.blColorId})`"></p>
+                                    <p>Qty: <strong x-text="part.quantity"></strong></p>
+                                    <p class="part-name" x-text="part.name"></p>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                </section>
+            </template>
+
+            <template x-if="minifigGroups.length > 0">
+                <section>
+                    <h2 class="parts-section-title" x-text="`Minifigs (${minifigGroups.length}):`"></h2>
+                    <template x-for="group in minifigGroups" :key="group.id">
+                        <section class="minifig-group">
+                            <h3 class="minifig-group-title">
+                                <span class="minifig-id-label" x-text="`${group.id} (${group.parts.length} parts) - `"></span>
+                                <a :href="group.url" target="_blank" rel="noopener noreferrer" class="minifig-name-link" x-text="group.name"></a>
+                            </h3>
+
+                            <div class="parts-grid">
+                                <template x-for="part in group.parts" :key="part.id">
+                                    <a :href="part.bricklinkUrl" target="_blank" rel="noopener noreferrer" class="part-card">
+                                        <img :src="part.imageUrl" :alt="part.name">
+                                        <div>
+                                            <p><strong x-text="part.blPartId"></strong></p>
+                                            <p x-text="`${part.colorDescription} (${part.blColorId})`"></p>
+                                            <p>Qty: <strong x-text="part.quantity"></strong></p>
+                                            <p class="part-name" x-text="part.name"></p>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
+                        </section>
+                    </template>
+                </section>
+            </template>
+        </div>
         <div class="page-number"></div>
     </div>
-    <script src="script.js"></script>
+
 </body>
 </html>
