@@ -327,11 +327,22 @@ p {
     .parts-section-title {
         margin: 12px 0 8px;
         font-size: 16px;
+        break-after: avoid-page;
+        page-break-after: avoid;
     }
 
     .minifig-group-title {
         margin-bottom: 4px;
         font-size: 13px;
+        break-after: avoid-page;
+        page-break-after: avoid;
+    }
+
+    .parts-section-title + .parts-grid,
+    .parts-section-title + .minifig-group,
+    .minifig-group-title + .parts-grid {
+        break-before: avoid-page;
+        page-break-before: avoid;
     }
 
     .minifig-id-label {
