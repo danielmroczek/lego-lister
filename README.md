@@ -5,6 +5,8 @@
 Lego Lister is a lightweight, client-side web app built to help rebuild sets from mixed brick collections.  
 Enter a set number, load parts from Rebrickable, and print a list that is easy to browse while shopping for missing pieces.
 
+Lego Lister was created to make rebuilding old mixed LEGO collections practical, with clear part lists you can print and use while sourcing missing pieces.
+
 ## Live Demo
 Try it here: [Lego Lister](https://danielmroczek.github.io/lego-lister/)
 
@@ -15,6 +17,7 @@ As a child, I was a huge LEGO fan. My brothers and I would occasionally receive 
 They took on this challenging task by first sorting all the bricks by color, then methodically trying to match them to their original sets. After many days of dedication, they succeeded! They managed to identify 40 different sets - I had no idea we had so many! However, they discovered that many sets were missing several pieces and weren't complete.
 
 This inspired my project - to help source the missing pieces online. While similar tools existed, none provided parts lists in a clear, print-friendly format that could be easily added to a binder. That's how Lego Lister was born. Using it, I could print organized parts lists for each set, making it simple to track missing pieces and order replacements. The journey to complete these childhood sets continues!
+
 ## Features
 
 - Set lookup by set number, with automatic suffix handling such as turning 1234 into 1234-1.
@@ -63,11 +66,7 @@ If the key becomes invalid, the app clears it and asks for a new one.
 
 ## Project Structure
 
-- index.html: App markup and Alpine templates.
-- script.js: Alpine component state, API integration, sorting, grouping, and view-model mapping.
-- style.css: Screen and print styles.
-- manifest.json: PWA metadata and icon configuration.
-
-## Why This Project Exists
-
-This project started as a practical way to recover old family LEGO sets from a mixed collection, identify missing pieces, and make replacement buying easier with print-friendly checklists.
+- `index.html`: App markup and Alpine templates.
+- `script.js`: Alpine component state, API integration, sorting, grouping, and view-model mapping.
+- `style.css`: Screen and print styles.
+- `manifest.json`: PWA metadata and icon configuration.
